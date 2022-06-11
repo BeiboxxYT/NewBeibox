@@ -36,7 +36,9 @@ npm install
 termux-setup-storage
  
 cd /NewBeibox-main
+
 cd bot
+
 npm start
 
 ### `—◉ ✔️ ACTIVAR EN CASO DE DETENERSE ✔️`
